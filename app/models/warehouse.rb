@@ -1,3 +1,5 @@
 class Warehouse < ApplicationRecord
-  has_many :products, through: :product_warehouse
+  has_many :product_warehouses
+  has_many :products, through: :product_warehouses
+
 end
