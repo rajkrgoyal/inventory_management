@@ -1,0 +1,35 @@
+<table border="1">
+  <tr>
+    <th>Sku Code</th>
+    <th>Product name</th>
+    <% @warehouses.each do |wh| %>
+    <th><%=wh%></th>
+    <% end %>
+  </tr>
+  <% @products.each do |product| %>
+  <tr>
+    <td><%= link_to(product.sku_code, edit_product_path(product))%></td>
+    <td><%= product.name %></td>
+    <%
+    td_count = 0
+    product_warehouses = product.product_warehouses
+    product.product_warehouses.each_with_index do |pw, index|
+      (pw.warehouse.id - td_count - 1).times do
+        td_count += 1
+        %>
+        <td>&nbsp;</td>
+      <% end -%>
+
+      <% color = (pw.item_count < pw.low_item_threshold) ? "#FF0000" : "#CCCCCC" %>
+      <td style="background-color: <%=color%>"><%= pw.item_count %></td>
+
+      <% if (product_warehouses.size == index + 1) # last record
+        (@warehouses.size - td_count - 1).times do %>
+          <td>&nbsp;</td>
+        <%  end
+      end
+      td_count += 1
+    end -%>
+  </tr>
+  <% end %>
+</table>

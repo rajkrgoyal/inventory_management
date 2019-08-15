@@ -1,0 +1,16 @@
+<% if f.object.new_record? %>
+<h3>Add New warehouse</h3>
+  <div class="field">
+    <%= f.label :warehouse_id %>
+    <%= f.select("warehouse_id", Warehouse.all.collect {|w| [ w.name, w.id ] }, { include_blank: true }) %>
+  </div>
+<% end %>
+<div class="field">
+  <%= f.label :item_count %>
+  <%= f.text_field :item_count %>
+</div>
+
+<div class="field">
+  <%= f.label :low_item_threshold %>
+  <%= f.text_field :low_item_threshold %>
+</div>
