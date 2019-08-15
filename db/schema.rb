@@ -12,9 +12,9 @@
 
 ActiveRecord::Schema.define(version: 2019_08_11_205322) do
 
-  create_table "product_warehouses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "product_id"
-    t.bigint "warehouse_id"
+  create_table "product_warehouses", force: :cascade do |t|
+    t.integer "product_id"
+    t.integer "warehouse_id"
     t.integer "item_count", default: 0
     t.integer "low_item_threshold", limit: 3, default: 10
     t.datetime "created_at", null: false
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 2019_08_11_205322) do
     t.index ["warehouse_id"], name: "index_product_warehouses_on_warehouse_id"
   end
 
-  create_table "products", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "products", force: :cascade do |t|
     t.string "name"
     t.string "sku_code", limit: 8
     t.decimal "price", precision: 8, scale: 2
@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 2019_08_11_205322) do
     t.index ["sku_code"], name: "index_products_on_sku_code", unique: true
   end
 
-  create_table "warehouses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "warehouses", force: :cascade do |t|
     t.string "name"
     t.string "wh_code", limit: 16
     t.integer "max_apacity"
@@ -45,6 +45,4 @@ ActiveRecord::Schema.define(version: 2019_08_11_205322) do
     t.index ["wh_code"], name: "index_warehouses_on_wh_code", unique: true
   end
 
-  add_foreign_key "product_warehouses", "products"
-  add_foreign_key "product_warehouses", "warehouses"
 end
