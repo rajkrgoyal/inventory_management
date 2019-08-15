@@ -1,0 +1,36 @@
+<%= form_with(model: warehouse, local: true) do |f| %>
+  <% if warehouse.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(warehouse.errors.count, "error") %> prohibited this warehouse from being saved:</h2>
+      <ul>
+      <% warehouse.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :wh_code %>
+    <%= f.text_field :wh_code %>
+  </div>
+
+  <div class="field">
+    <%= f.label :max_apacity %>
+    <%= f.text_field :max_apacity %>
+  </div>
+
+  <div class="field">
+    <%= f.label :pincode %>
+    <%= f.text_field :pincode %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+  <% end %>

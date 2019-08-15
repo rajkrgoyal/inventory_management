@@ -1,10 +1,9 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: %I[edit update]
 
-  # TODO pagination
+  # TODO: pagination
   def index
     @products = Product.includes(:warehouses)
-    # @products = Product.includes(:warehouses).order("product_warehouses.product_id, product_warehouses.warehouse_id ASC")
     @warehouses = Warehouse.all.map(&:name)
 
     respond_to do |format|
@@ -28,8 +27,6 @@ class ProductsController < ApplicationController
   # POST /products.json
   def create
     @product = Product.new(product_params)
-p @product.valid?
-p @product.errors
     respond_to do |format|
       if @product.save
         format.html { redirect_to root_url, notice: 'Product was successfully created.' }
@@ -41,13 +38,12 @@ p @product.errors
     end
   end
 
-
   # PATCH/PUT /products/1
   # PATCH/PUT /products/1.json
   def update
     respond_to do |format|
       if @product.update(product_params)
-        format.html { redirect_to products_url, notice: 'Product was successfully updated.' }
+        format.html { redirect_to root_url, notice: 'Product successfully updated.' }
         format.json { render :index, status: :ok, location: @products }
       else
         format.html { render :edit }
@@ -57,14 +53,15 @@ p @product.errors
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_product
-      @product = Product.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def product_params
-      params.require(:product).permit(:name, :price, 
-        product_warehouses_attributes: [:id, :item_count, :low_item_threshold, :warehouse_id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_product
+    @product = Product.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def product_params
+    params.require(:product).permit(:name, :price,
+      product_warehouses_attributes: %I[id item_count low_item_threshold warehouse_id])
+  end
 end
